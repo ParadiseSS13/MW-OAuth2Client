@@ -122,6 +122,7 @@ class SpecialOAuth2Client extends SpecialPage {
 		global $wgOut, $wgRequest;
 		$title = null;
 		$wgRequest->getSession()->persist();
+		/*
 		if( $wgRequest->getSession()->exists('returnto') ) {
 			$title = Title::newFromText( $wgRequest->getSession()->get('returnto') );
 			$wgRequest->getSession()->remove('returnto');
@@ -132,6 +133,8 @@ class SpecialOAuth2Client extends SpecialPage {
 			$title = Title::newMainPage();
 		}
 		$wgOut->redirect( $title->getFullURL() );
+		*/
+		$wgOut->redirect("https://www.paradisestation.org/wiki/index.php?title=Main_Page"); // PARADISE EDIT - Screw portability
 		return true;
 	}
 
@@ -176,7 +179,7 @@ class SpecialOAuth2Client extends SpecialPage {
 
 		$username = JsonHelper::extractValue($response, $wgOAuth2Client['configuration']['username']);
 		$email =  JsonHelper::extractValue($response, $wgOAuth2Client['configuration']['email']);
-		Hooks::run("OAuth2ClientBeforeUserSave", [&$username, &$email, $response]);
+		MediaWiki\MediaWikiServices::getInstance()->getHookContainer()->run("OAuth2ClientBeforeUserSave", [&$username, &$email, $response]); // PARADISE EDIT - New hook system
 		$user = User::newFromName($username, 'creatable');
 		if (!$user) {
 			throw new MWException('Could not create user with username:' . $username);
