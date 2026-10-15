@@ -134,7 +134,7 @@ class SpecialOAuth2Client extends SpecialPage {
 		}
 		$wgOut->redirect( $title->getFullURL() );
 		*/
-		$wgOut->redirect("https://www.paradisestation.org/wiki/index.php?title=Main_Page"); // PARADISE EDIT - Screw portability
+		$wgOut->redirect($PARA_MW_REDIRECT_URL); // PARADISE EDIT - Screw portability
 		return true;
 	}
 
