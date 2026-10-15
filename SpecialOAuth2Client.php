@@ -22,6 +22,7 @@ require __DIR__.'/JsonHelper.php';
 class SpecialOAuth2Client extends SpecialPage {
 
 	private $_provider;
+	private $para_landing_url;
 
 	/**
 	 * Required settings in global $wgOAuth2Client
@@ -41,6 +42,7 @@ class SpecialOAuth2Client extends SpecialPage {
 		parent::__construct('OAuth2Client'); // ???: wat doet dit?
 		global $wgOAuth2Client, $wgScriptPath;
 		global $wgServer, $wgArticlePath;
+		$this->para_landing_url = $wgOAuth2Client['configuration']['para_landing_url'];
 
 		require __DIR__ . '/vendors/oauth2-client/vendor/autoload.php';
 
@@ -134,7 +136,7 @@ class SpecialOAuth2Client extends SpecialPage {
 		}
 		$wgOut->redirect( $title->getFullURL() );
 		*/
-		$wgOut->redirect($PARA_MW_REDIRECT_URL); // PARADISE EDIT - Screw portability
+		$wgOut->redirect($this->para_landing_url); // PARADISE EDIT - Screw portability
 		return true;
 	}
 
